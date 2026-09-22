@@ -1,4 +1,4 @@
-#include <stdio.h>
+ #include <stdio.h>
 
 int elements[100], solution[100];
 int n, target;
@@ -10,7 +10,7 @@ int findSubset(int index, int sum, int count)
 		printf("Yes, combination can be formed.\n");
 		printf("solution set: ");
 		for (int i = 0; i < count; i++)
-			printf("%d ", solution[i]);
+			printf("%d, ", solution[i]);
 		printf("\n");
 		return 1;
 	}

@@ -65,48 +65,57 @@ long long calculateInitialBound(void)
     return (bound + 1) / 2;
 }
 
-int isVisited(int city, int level)
+int isVisited(int path[], int level, int city)
 {
     int i;
     for (i = 0; i < level; i++)
-        if (currentPath[i] == city)
+        if (path[i] == city)
             return 1;
     return 0;
 }
 
-void branchAndBound(int level, long long currentCost, long long bound)
+typedef struct { int path[MAX]; int level; long long cost, bound; } Node;
+typedef struct { Node data[MAX * MAX]; int front, rear; } Queue;
+
+void push(Queue *q, Node x){ q->data[q->rear++] = x; }
+Node pop(Queue *q){ return q->data[q->front++]; }
+int empty(Queue *q){ return q->front == q->rear; }
+
+void branchAndBoundFIFO(long long initialBound)
 {
-    int currentCity = currentPath[level - 1];
-    int nextCity;
-    long long nextBound;
-    long long nextCost;
+    Queue q; Node cur, nxt; int city, nextCity, i;
+    q.front = q.rear = 0;
+    cur.level = 1; cur.cost = 0; cur.bound = initialBound; cur.path[0] = 0;
+    push(&q, cur);
 
-    if (level == n){
-        if (cost[currentCity][0] != INF){
-            nextCost = currentCost + cost[currentCity][0];
-            if (nextCost < bestCost){
-                bestCost = nextCost;
-                for (nextCity = 0; nextCity < n; nextCity++)
-                    bestPath[nextCity] = currentPath[nextCity];
-                bestPath[n] = 0;
+    while (!empty(&q)){
+        cur = pop(&q); city = cur.path[cur.level - 1];
+
+        if (cur.level == n){
+            if (cost[city][0] != INF){
+                long long val = cur.cost + cost[city][0];
+                if (val < bestCost){
+                    bestCost = val;
+                    for (i = 0; i < n; i++) bestPath[i] = cur.path[i];
+                    bestPath[n] = 0;
+                }
             }
-        }
-        return;
-    }
-
-    for (nextCity = 1; nextCity < n; nextCity++){
-        if (isVisited(nextCity, level) || cost[currentCity][nextCity] == INF)
             continue;
+        }
 
-        nextCost = currentCost + cost[currentCity][nextCity];
-        if (level == 1)
-            nextBound = bound - (firstMin[currentCity] + firstMin[nextCity]) / 2;
-        else
-            nextBound = bound - (secondMin[currentCity] + firstMin[nextCity]) / 2;
+        for (nextCity = 1; nextCity < n; nextCity++){
+            if (isVisited(cur.path, cur.level, nextCity) || cost[city][nextCity] == INF)
+                continue;
 
-        if (nextCost + nextBound < bestCost){
-            currentPath[level] = nextCity;
-            branchAndBound(level + 1, nextCost, nextBound);
+            nxt = cur;
+            nxt.path[cur.level] = nextCity;
+            nxt.cost = cur.cost + cost[city][nextCity];
+            nxt.bound = (cur.level == 1) ? cur.bound - (firstMin[city] + firstMin[nextCity]) / 2
+                                        : cur.bound - (secondMin[city] + firstMin[nextCity]) / 2;
+            nxt.level = cur.level + 1;
+
+            if (nxt.cost + nxt.bound < bestCost)
+                push(&q, nxt);
         }
     }
 }
@@ -164,7 +173,7 @@ int main(void)
     bestCost = LLONG_MAX;
     currentPath[0] = 0;
     if (initialBound != INF)
-        branchAndBound(1, 0, initialBound);
+        branchAndBoundFIFO(initialBound);
 
     if (bestCost == LLONG_MAX){
         printf("\nNo possible tour found!\n");
