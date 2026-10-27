@@ -1,42 +1,29 @@
-#include<stdio.h>
-
-int findMin(int a[],int l,int r)
-{
-    int m,x,y;
-    if(l==r)
-        return a[l];
-    m=(l+r)/2;
-    x=findMin(a,l,m);
-    y=findMin(a,m+1,r);
-    return (x<y)?x:y;
-}
-int findMax(int a[],int l,int r)
-{
-    if(l==r)
-        return a[l];
-    int m=(l+r)/2;
-    int x=findMax(a,l,m);
-    int y=findMax(a,m+1,r);
-    return (x>y)?x:y;
-}
+#include <stdio.h>
 
 int main()
 {
-    int n,i,mn,mx;
-    printf("Enter the no.of elements: ");
-    scanf("%d",&n);
-    if(n<=0)
+    int a[100], n, i, min, max;
+
+    printf("Enter number of elements: ");
+    scanf("%d", &n);
+
+    printf("Enter the elements:\n");
+    for(i = 0; i < n; i++)
+        scanf("%d", &a[i]);
+
+    min = max = a[0];
+
+    for(i = 1; i < n; i++)
     {
-        printf("Invalid input.\n");
-        return 0;
+        if(a[i] < min)
+            min = a[i];
+
+        if(a[i] > max)
+            max = a[i];
     }
-    int a[n];
-    printf("Enter %d elements: \n",n);
-    for(i=0;i<n;i++)
-        scanf("%d",&a[i]);
-    mn=findMin(a,0,n-1);
-    mx=findMax(a,0,n-1);
-    printf("Minimum element is: %d\n",mn);
-    printf("Maximum element is: %d\n",mx);
+
+    printf("Minimum element = %d\n", min);
+    printf("Maximum element = %d\n", max);
+
     return 0;
 }

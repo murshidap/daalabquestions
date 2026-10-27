@@ -1,49 +1,75 @@
 #include <stdio.h>
 
-typedef struct {
-    int number;
-    float profit, weight, ratio;
-    int quantity;
-} Item;
+int main()
+{
+    float weight[100], profit[100], ratio[100];
+    float capacity, totalProfit = 0, fraction, temp;
+    int n, i, j;
 
-int main(void) {
-    int n, i, j, take;
-    float capacity, originalCapacity, totalWeight = 0, totalProfit = 0;
-    Item item[100], temp;
-
-    printf("Enter capacity: ");
-    scanf("%f", &capacity);
-    originalCapacity = capacity;
     printf("Enter number of items: ");
     scanf("%d", &n);
 
-    for (i = 0; i < n; i++) {
-        printf("Item %d (profit weight quantity): ", i + 1);
-        item[i].number = i + 1;
-        scanf("%f %f %d", &item[i].profit, &item[i].weight,
-              &item[i].quantity);
-        item[i].ratio = item[i].profit / item[i].weight;
+    printf("Enter weight and profit of each item:\n");
+
+    for(i = 0; i < n; i++)
+    {
+        scanf("%f%f", &weight[i], &profit[i]);
+
+        if(weight[i] <= 0 || profit[i] < 0)
+        {
+            printf("Invalid weight or profit\n");
+            return 0;
+        }
+
+        ratio[i] = profit[i] / weight[i];
     }
 
-    for (i = 0; i < n - 1; i++)
-        for (j = i + 1; j < n; j++)
-            if (item[i].ratio < item[j].ratio) {
-                temp = item[i]; item[i] = item[j]; item[j] = temp;
+    printf("Enter knapsack capacity: ");
+    scanf("%f", &capacity);
+
+    if(capacity < 0)
+    {
+        printf("Invalid capacity\n");
+        return 0;
+    }
+
+    for(i = 0; i < n - 1; i++)
+    {
+        for(j = 0; j < n - i - 1; j++)
+        {
+            if(ratio[j] < ratio[j + 1])
+            {
+                temp = ratio[j];
+                ratio[j] = ratio[j + 1];
+                ratio[j + 1] = temp;
+
+                temp = weight[j];
+                weight[j] = weight[j + 1];
+                weight[j + 1] = temp;
+
+                temp = profit[j];
+                profit[j] = profit[j + 1];
+                profit[j + 1] = temp;
             }
-
-    printf("\nItems chosen:\n");
-    for (i = 0; i < n && capacity > 0; i++) {
-        take = capacity / item[i].weight;
-        if (take > item[i].quantity) take = item[i].quantity;
-        capacity -= take * item[i].weight;
-        totalWeight += take * item[i].weight;
-        totalProfit += take * item[i].profit;
-        if (take > 0)
-            printf("Item %d: %d unit(s)\n", item[i].number, take);
+        }
     }
 
-    printf("Total weight: %.2f\n", totalWeight);
-    printf("Remaining space: %.2f\n", originalCapacity - totalWeight);
-    printf("Profit: %.2f\n", totalProfit);
+    for(i = 0; i < n && capacity > 0; i++)
+    {
+        if(weight[i] <= capacity)
+        {
+            totalProfit += profit[i];
+            capacity -= weight[i];
+        }
+        else
+        {
+            fraction = capacity / weight[i];
+            totalProfit += profit[i] * fraction;
+            capacity = 0;
+        }
+    }
+
+    printf("Maximum profit = %.2f\n", totalProfit);
+
     return 0;
 }

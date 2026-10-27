@@ -1,50 +1,75 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int safe(int board[], int row, int column) {
-    int previous;
+int board[20], n;
 
-    for (previous = 0; previous < row; previous++)
-        if (board[previous] == column ||
-            abs(board[previous] - column) == row - previous)
+int safe(int row, int col)
+{
+    int i;
+
+    for(i = 0; i < row; i++)
+    {
+        if(board[i] == col ||
+           abs(board[i] - col) == abs(i - row))
             return 0;
+    }
+
     return 1;
 }
 
-int solve(int board[], int row, int n) {
-    int column;
+int solve(int row)
+{
+    int col;
 
-    if (row == n) return 1;
-    for (column = 0; column < n; column++) {
-        if (safe(board, row, column)) {
-            board[row] = column;
-            if (solve(board, row + 1, n)) return 1;
+    if(row == n)
+        return 1;
+
+    for(col = 0; col < n; col++)
+    {
+        if(safe(row, col))
+        {
+            board[row] = col;
+
+            if(solve(row + 1))
+                return 1;
         }
     }
+
     return 0;
 }
 
-int main(void) {
-    int n, row, column;
+int main()
+{
+    int i, j;
 
-    printf("Enter number of queens: ");
+    printf("Enter N (maximum 20): ");
     scanf("%d", &n);
-    if (n < 1) {
-        printf("Number of queens must be positive.\n");
-        return 1;
-    }
 
-    int board[n];
-    if (!solve(board, 0, n)) {
-        printf("No solution exists.\n");
+    if(n < 1 || n > 20)
+    {
+        printf("Invalid N");
         return 0;
     }
 
-    printf("\nSolution:\n");
-    for (row = 0; row < n; row++) {
-        for (column = 0; column < n; column++)
-            printf(board[row] == column ? "Q " : ". ");
-        printf("\n");
+    if(solve(0))
+    {
+        printf("Solution:\n");
+
+        for(i = 0; i < n; i++)
+        {
+            for(j = 0; j < n; j++)
+            {
+                if(board[i] == j)
+                    printf("Q ");
+                else
+                    printf(". ");
+            }
+
+            printf("\n");
+        }
     }
+    else
+        printf("No solution exists\n");
+
     return 0;
 }

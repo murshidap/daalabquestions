@@ -1,52 +1,50 @@
-#include<stdio.h>
+#include <stdio.h>
 
-int pt(int a[],int l,int h)
+void quicksort(int a[], int low, int high)
 {
-    int j,t;
-    int p=a[h];
-    int i=l-1;
-    for(j=l;j<h;j++){
-        if(a[j]<=p){
-            i++;
-            t=a[i];
-            a[i]=a[j];
-            a[j]=t;
+    int i, j, pivot, temp;
+
+    if(low < high)
+    {
+        pivot = a[high];
+        i = low - 1;
+
+        for(j = low; j < high; j++)
+        {
+            if(a[j] <= pivot)
+            {
+                i++;
+                temp = a[i];
+                a[i] = a[j];
+                a[j] = temp;
+            }
         }
-    }
-    t=a[i+1];
-    a[i+1]=a[h];
-    a[h]=t;
-    return i+1;
-}
 
-void qs(int a[],int l,int h)
-{
-    int pi;
-    if(l<h){
-        pi=pt(a,l,h);
-        qs(a,l,pi-1);
-        qs(a,pi+1,h);
+        temp = a[i + 1];
+        a[i + 1] = a[high];
+        a[high] = temp;
+
+        quicksort(a, low, i);
+        quicksort(a, i + 2, high);
     }
 }
 
 int main()
 {
-    int n,i;
-    printf("Enter the no.of elements: ");
-    scanf("%d",&n);
-    if(n<=0)
-    {
-        printf("Invalid input.\n");
-        return 0;
-    }
-    int a[n];
-    printf("Enter %d elements: \n",n);
-    for(i=0;i<n;i++)
-        scanf("%d",&a[i]);
-    qs(a,0,n-1);
-    printf("Sorted array is: \n");
-    for(i=0;i<n;i++)
-        printf("%d ",a[i]);
-    printf("\n");
+    int a[100], n, i;
+
+    printf("Enter number of elements: ");
+    scanf("%d", &n);
+
+    printf("Enter elements:\n");
+    for(i = 0; i < n; i++)
+        scanf("%d", &a[i]);
+
+    quicksort(a, 0, n - 1);
+
+    printf("Sorted array:\n");
+    for(i = 0; i < n; i++)
+        printf("%d ", a[i]);
+
     return 0;
 }

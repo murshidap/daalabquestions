@@ -1,72 +1,57 @@
-#include<stdio.h>
+#include <stdio.h>
 
-void mg(int a[],int l,int m,int r)
-{
-    int i,j,k;
-    int n1=m-l+1;
-    int n2=r-m;
-    int x[n1],y[n2];
-    for(i=0;i<n1;i++)
-        x[i]=a[l+i];
-    for(j=0;j<n2;j++)
-        y[j]=a[m+1+j];
-    i=0;
-    j=0;
-    k=l;
-    while(i<n1 && j<n2)
-    {
-        if(x[i]<=y[j])
-        {
-            a[k]=x[i];
-            i++;
-        }
-        else
-        {
-            a[k]=y[j];
-            j++;
-        }
-        k++;
-    }
-    while(i<n1)
-    {
-        a[k]=x[i];
-        i++;
-        k++;
-    }
-    while(j<n2)
-    {
-        a[k]=y[j];
-        j++;
-        k++;
-    }
-}
+int a[100], temp[100];
 
-void ms(int a[],int l,int r)
+void mergesort(int low, int high)
 {
-    int m;
-    if(l<r){
-        m=l+(r-l)/2;
-        ms(a,l,m);
-        ms(a,m+1,r);
-        mg(a,l,m,r);
+    int mid, i, j, k;
+
+    if(low < high)
+    {
+        mid = (low + high) / 2;
+
+        mergesort(low, mid);
+        mergesort(mid + 1, high);
+
+        i = low;
+        j = mid + 1;
+        k = low;
+
+        while(i <= mid && j <= high)
+        {
+            if(a[i] <= a[j])
+                temp[k++] = a[i++];
+            else
+                temp[k++] = a[j++];
+        }
+
+        while(i <= mid)
+            temp[k++] = a[i++];
+
+        while(j <= high)
+            temp[k++] = a[j++];
+
+        for(i = low; i <= high; i++)
+            a[i] = temp[i];
     }
 }
 
 int main()
 {
-    int n,i;
-    printf("Enter the no.of elements: ");
-    scanf("%d",&n);
-    if(n<=0)
-        printf("Invalid input.\n");
-    int a[n];
-    printf("Enter %d elements: \n",n);
-    for(i=0;i<n;i++)
-        scanf("%d",&a[i]);
-    ms(a,0,n-1);
-    printf("Sorted array is: \n");
-    for(i=0;i<n;i++)
-        printf("%d ",a[i]);
-    printf("\n");
+    int n, i;
+
+    printf("Enter number of elements: ");
+    scanf("%d", &n);
+
+    printf("Enter elements:\n");
+    for(i = 0; i < n; i++)
+        scanf("%d", &a[i]);
+
+    mergesort(0, n - 1);
+
+    printf("Sorted array:\n");
+    for(i = 0; i < n; i++)
+        printf("%d ", a[i]);
+
     return 0;
-    }
+}

@@ -1,33 +1,38 @@
-#include<stdio.h>
+#include <stdio.h>
 
 int main()
 {
-    int n,trgt,                  rt,lt,md;
-    int res=0;
-    printf("Enter the no.of elements: ");
-    scanf("%d",&n);
-    int array[n];
-    printf("Enter %d elements in ascending order: \n",n);
-    for(int i=0;i<n;i++)
-        scanf("%d",&array[i]);
-    printf("enter the element to search: ");
-    scanf("%d",&trgt);
-    lt=0;
-    rt=n-1;
-    while(lt<=rt){
-        md=lt+(rt-lt)/2;
-        if(array[md]==trgt)
+    int a[100], n, key, low, high, mid, i;
+
+    printf("Enter number of elements: ");
+    scanf("%d", &n);
+
+    printf("Enter elements in ascending order:\n");
+    for(i = 0; i < n; i++)
+        scanf("%d", &a[i]);
+
+    printf("Enter element to search: ");
+    scanf("%d", &key);
+
+    low = 0;
+    high = n - 1;
+
+    while(low <= high)
+    {
+        mid = (low + high) / 2;
+
+        if(a[mid] == key)
         {
-            printf("%d found at position %d.\n",trgt,md);
-            res=1;
-            break;
+            printf("Element found at position %d", mid + 1);
+            return 0;
         }
-        else if(array[md]<trgt)
-            lt=md+1;
+        else if(key < a[mid])
+            high = mid - 1;
         else
-            rt=md-1;
+            low = mid + 1;
     }
-    if(!res)
-        printf("%d was not found in the array.\n",trgt);
+
+    printf("Element not found");
+
     return 0;
 }

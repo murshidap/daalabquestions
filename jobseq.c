@@ -1,66 +1,73 @@
 #include <stdio.h>
 
-struct Job
-{
-    char id;
-    int deadline;
-    int profit;
-};
-
 int main()
 {
-    int n, i, j;
-    struct Job job[50], temp;
-    int slot[50];
-    int maxDeadline = 0;
-    int totalProfit = 0;
-    printf("Enter the number of jobs: ");
+    int n, i, j, max = 0, total = 0, temp;
+    int deadline[20], profit[20], job[20];
+    int slot[20], maxDeadline = 0;
+
+    printf("Enter number of jobs: ");
     scanf("%d", &n);
-    printf("\nEnter details of Jobs (in the format Job Deadline Profit ) :\n");
-    for (i = 0; i < n; i++)
+
+    printf("Enter job ID, deadline and profit:\n");
+
+    for(i = 0; i < n; i++)
     {
-        printf("\nJob %d: ", i + 1);
-        scanf(" %c %d %d",
-              &job[i].id,
-              &job[i].deadline,
-              &job[i].profit);
-        if (job[i].deadline > maxDeadline)
-            maxDeadline = job[i].deadline;
+        scanf("%d%d%d", &job[i], &deadline[i], &profit[i]);
+
+        if(deadline[i] > maxDeadline)
+            maxDeadline = deadline[i];
     }
-    for (i = 0; i < n - 1; i++)
+
+    /* Sort jobs by descending profit */
+    for(i = 0; i < n - 1; i++)
     {
-        for (j = i + 1; j < n; j++)
+        for(j = 0; j < n - i - 1; j++)
         {
-            if (job[i].profit < job[j].profit)
+            if(profit[j] < profit[j + 1])
             {
-                temp = job[i];
-                job[i] = job[j];
-                job[j] = temp;
+                temp = profit[j];
+                profit[j] = profit[j + 1];
+                profit[j + 1] = temp;
+
+                temp = deadline[j];
+                deadline[j] = deadline[j + 1];
+                deadline[j + 1] = temp;
+
+                temp = job[j];
+                job[j] = job[j + 1];
+                job[j + 1] = temp;
             }
         }
     }
-    for (i = 1; i <= maxDeadline; i++)
+
+    /* Initialize slots */
+    for(i = 0; i < maxDeadline; i++)
         slot[i] = -1;
-    for (i = 0; i < n; i++)
+
+    /* Schedule jobs */
+    for(i = 0; i < n; i++)
     {
-        for (j = job[i].deadline; j >= 1; j--)
+        for(j = deadline[i] - 1; j >= 0; j--)
         {
-            if (slot[j] == -1)
+            if(slot[j] == -1)
             {
-                slot[j] = i;
-                totalProfit += job[i].profit;
+                slot[j] = job[i];
+                total += profit[i];
                 break;
             }
         }
     }
-    printf("\nScheduled Jobs:\n");
-    for (i = 1; i <= maxDeadline; i++)
+
+    printf("\nJob Schedule:\n");
+
+    for(i = 0; i < maxDeadline; i++)
     {
-        if (slot[i] != -1)
-        {
-            printf("Time Slot %d -> Job %c\n",i, job[slot[i]].id);
-        }
+        if(slot[i] != -1)
+            printf("Slot %d: Job %d\n", i + 1, slot[i]);
     }
-    printf("\nMaximum Profit = %d\n", totalProfit);
+
+    printf("Maximum Profit = %d\n", total);
+
     return 0;
 }

@@ -1,35 +1,44 @@
 #include <stdio.h>
 
-int main(void) {
-    int n, capacity, i, w, weight[100], profit[100];
+int main()
+{
+    int n, capacity, i, w;
+    int weight[20], profit[20];
+    int dp[21][101];
 
-    printf("Enter capacity: ");
-    if (scanf("%d", &capacity) != 1 || capacity < 0) return 1;
-    printf("Enter number of items (1-100): ");
-    if (scanf("%d", &n) != 1 || n < 1 || n > 100) return 1;
+    printf("Enter number of items: ");
+    scanf("%d", &n);
 
-    for (i = 0; i < n; i++) {
-        printf("Enter weight and profit of item %d: ", i + 1);
-        if (scanf("%d %d", &weight[i], &profit[i]) != 2 || weight[i] < 0)
-            return 1;
+    printf("Enter the weights of items:\n");
+    for(i = 1; i <= n; i++)
+        scanf("%d", &weight[i]);
+
+    printf("Enter the profits of items:\n");
+    for(i = 1; i <= n; i++)
+        scanf("%d", &profit[i]);
+
+    printf("Enter knapsack capacity: ");
+    scanf("%d", &capacity);
+
+    for(i = 0; i <= n; i++)
+    {
+        for(w = 0; w <= capacity; w++)
+        {
+            if(i == 0 || w == 0)
+                dp[i][w] = 0;
+            else if(weight[i] <= w)
+            {
+                if(profit[i] + dp[i-1][w-weight[i]] > dp[i-1][w])
+                    dp[i][w] = profit[i] + dp[i-1][w-weight[i]];
+                else
+                    dp[i][w] = dp[i-1][w];
+            }
+            else
+                dp[i][w] = dp[i-1][w];
+        }
     }
 
-    int dp[n + 1][capacity + 1];
-    for (w = 0; w <= capacity; w++) dp[0][w] = 0;
-    for (i = 1; i <= n; i++)
-        for (w = 0; w <= capacity; w++) {
-            dp[i][w] = dp[i - 1][w];
-            if (weight[i - 1] <= w &&
-                dp[i - 1][w - weight[i - 1]] + profit[i - 1] > dp[i][w])
-                dp[i][w] = dp[i - 1][w - weight[i - 1]] + profit[i - 1];
-        }
+    printf("Maximum profit = %d\n", dp[n][capacity]);
 
-    printf("Items taken:\n");
-    for (i = n, w = capacity; i > 0; i--)
-        if (dp[i][w] != dp[i - 1][w]) {
-            printf("Item %d , ",i);
-            w -= weight[i - 1];
-        }
-    printf("\nMaximum profit: %d\n", dp[n][capacity]);
     return 0;
 }
