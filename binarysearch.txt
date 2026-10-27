@@ -1,0 +1,14 @@
+**Algorithm: Binary Search**
+
+1. Start.
+2. Read the number of elements `n`.
+3. Read `n` elements into array `a` in ascending order.
+4. Read the element to be searched, `key`.
+5. Initialize `low = 0` and `high = n - 1`.
+6. Repeat steps 7–11 while `low <= high`:
+   - Calculate the middle index: `mid = (low + high) / 2`.
+   - If `a[mid] == key`, display the position `mid + 1` and go to step 12.
+   - If `key < a[mid]`, update `high = mid - 1`.
+   - Otherwise, update `low = mid + 1`.
+7. If `low > high`, display **"Element not found"**.
+8. Stop.

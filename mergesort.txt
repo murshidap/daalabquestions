@@ -1,0 +1,21 @@
+**Algorithm: Merge Sort**
+
+1. Start.
+2. Read the number of elements `n`.
+3. Read `n` elements into array `a`.
+4. Call `mergesort(0, n - 1)` to sort the array.
+5. **Divide the Array:**
+   - If `low < high`:
+     - Calculate the middle index: `mid = (low + high) / 2`.
+     - Recursively call `mergesort(low, mid)` to sort the left half.
+     - Recursively call `mergesort(mid + 1, high)` to sort the right half.
+6. **Merge the Two Halves:**
+   - Initialize `i = low`, `j = mid + 1`, and `k = low`.
+   - Repeat while `i <= mid` and `j <= high`:
+     - If `a[i] <= a[j]`, assign `temp[k] = a[i]`, then increment `i` and `k`.
+     - Otherwise, assign `temp[k] = a[j]`, then increment `j` and `k`.
+   - Copy the remaining elements of the left half into `temp` while `i <= mid`.
+   - Copy the remaining elements of the right half into `temp` while `j <= high`.
+   - Copy the merged elements back into the original array: `a[i] = temp[i]` for each index from `low` to `high`.
+7. Display the sorted array.
+8. Stop.

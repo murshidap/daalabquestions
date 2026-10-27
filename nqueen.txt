@@ -1,0 +1,27 @@
+**Algorithm: N-Queens Problem Using Backtracking**
+
+1. Start.
+2. Read the number of queens `n`.
+3. If `n < 1` or `n > 20`, display **"Invalid N"** and stop.
+4. Call `solve(0)` to place queens starting from row `0`.
+5. **Place Queens Using Backtracking:**
+   - If `row == n`, return success (`1`), as all queens have been placed.
+   - Repeat for `col = 0` to `n - 1`:
+     - Check whether placing a queen at `(row, col)` is safe:
+       - For each previous row `i = 0` to `row - 1`:
+         - If `board[i] == col`, the same column is occupied.
+         - If `abs(board[i] - col) == abs(i - row)`, the same diagonal is occupied.
+       - If either condition is true, reject the position.
+     - If the position is safe:
+       - Place the queen by setting `board[row] = col`.
+       - Recursively call `solve(row + 1)`.
+       - If the recursive call returns success, return `1`.
+   - If no valid column is found, return failure (`0`) and backtrack to the previous row.
+6. If `solve(0)` returns success:
+   - Display the solution board.
+   - For each row `i = 0` to `n - 1`:
+     - For each column `j = 0` to `n - 1`:
+       - If `board[i] == j`, print `Q`.
+       - Otherwise, print `.`.
+7. Otherwise, display **"No solution exists"**.
+8. Stop.

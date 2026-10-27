@@ -1,0 +1,24 @@
+**Algorithm: Job Sequencing with Deadlines**
+
+1. Start.
+2. Read the number of jobs `n`.
+3. Read the job ID, deadline, and profit of each job. Find the maximum deadline `maxDeadline`.
+4. **Sort the Jobs by Profit:**
+   - Repeat for `i = 0` to `n - 2`:
+     - Repeat for `j = 0` to `n - i - 2`:
+       - If `profit[j] < profit[j + 1]`, swap the corresponding profit, deadline, and job ID values.
+   - This arranges the jobs in descending order of profit.
+5. **Initialize the Slots:**
+   - Set `slot[i] = -1` for all `i = 0` to `maxDeadline - 1`.
+6. **Schedule the Jobs:**
+   - Repeat for `i = 0` to `n - 1`:
+     - Set `j = deadline[i] - 1`.
+     - Repeat while `j >= 0`:
+       - If `slot[j] == -1`:
+         - Assign `slot[j] = job[i]`.
+         - Update `total = total + profit[i]`.
+         - Exit the inner loop.
+       - Otherwise, decrement `j` by 1.
+7. Display the scheduled jobs and their corresponding slots.
+8. Display the maximum profit `total`.
+9. Stop.

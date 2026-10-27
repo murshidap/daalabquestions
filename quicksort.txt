@@ -1,0 +1,20 @@
+**Algorithm: Quick Sort**
+
+1. Start.
+2. Read the number of elements `n`.
+3. Read `n` elements into array `a`.
+4. Call `quicksort(a, 0, n - 1)`.
+5. **Partition the Array:**
+   - If `low < high`:
+     - Select the last element as the pivot: `pivot = a[high]`.
+     - Initialize `i = low - 1`.
+     - Repeat for `j = low` to `high - 1`:
+       - If `a[j] <= pivot`:
+         - Increment `i` by 1.
+         - Swap `a[i]` and `a[j]`.
+     - Swap `a[i + 1]` and `a[high]` to place the pivot in its correct position.
+6. **Sort the Subarrays:**
+   - Recursively call `quicksort(a, low, i)` to sort the left subarray.
+   - Recursively call `quicksort(a, i + 2, high)` to sort the right subarray.
+7. Display the sorted array.
+8. Stop.

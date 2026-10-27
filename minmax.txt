@@ -1,0 +1,12 @@
+**Algorithm: Find Minimum and Maximum Elements**
+
+1. Start.
+2. Read the number of elements `n`.
+3. Read `n` elements into array `a`.
+4. Initialize `min = a[0]` and `max = a[0]`.
+5. Repeat for `i = 1` to `n - 1`:
+   - If `a[i] < min`, update `min = a[i]`.
+   - If `a[i] > max`, update `max = a[i]`.
+6. Display the minimum element `min`.
+7. Display the maximum element `max`.
+8. Stop.

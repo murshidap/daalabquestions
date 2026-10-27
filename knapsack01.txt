@@ -1,0 +1,20 @@
+**Algorithm: 0/1 Knapsack Using Dynamic Programming**
+
+1. Start.
+2. Read the number of items `n`.
+3. Read the weight `weight[i]` of each item, for `i = 1` to `n`.
+4. Read the profit `profit[i]` of each item, for `i = 1` to `n`.
+5. Read the knapsack capacity `capacity`.
+6. **Initialize the DP Table:**
+   - Repeat for `i = 0` to `n` and `w = 0` to `capacity`:
+     - If `i == 0` or `w == 0`, set `dp[i][w] = 0`.
+7. **Fill the DP Table:**
+   - Repeat for `i = 1` to `n`:
+     - Repeat for `w = 1` to `capacity`:
+       - If `weight[i] <= w`:
+         - Calculate the profit obtained by including the item: `profit[i] + dp[i-1][w-weight[i]]`.
+         - Compare it with the profit obtained by excluding the item: `dp[i-1][w]`.
+         - Set `dp[i][w]` to the larger of these two values.
+       - Otherwise, set `dp[i][w] = dp[i-1][w]`.
+8. Display the maximum profit: `dp[n][capacity]`.
+9. Stop.

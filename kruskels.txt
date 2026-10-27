@@ -1,0 +1,26 @@
+**Algorithm: Kruskal's Algorithm**
+
+1. Start.
+2. Read the number of vertices `n` and edges `m`.
+3. Read the source vertex `u`, destination vertex `v`, and weight `w` of each edge.
+4. **Initialize the Parent Array:**
+   - For each vertex `i = 0` to `n - 1`, set `parent[i] = i`.
+5. **Sort the Edges:**
+   - Repeat for `i = 0` to `m - 2`:
+     - Repeat for `j = 0` to `m - i - 2`:
+       - If `e[j].w > e[j + 1].w`, swap the two edges.
+   - The edges are now arranged in ascending order of weight.
+6. Initialize `total = 0` and `count = 0`.
+7. **Construct the Minimum Spanning Tree (MST):**
+   - Repeat for each edge, while `i < m` and `count < n - 1`:
+     - Find the parent of the source vertex: `u = find(e[i].u)`.
+     - Find the parent of the destination vertex: `v = find(e[i].v)`.
+     - If `u != v`:
+       - Select the edge and display its source, destination, and weight.
+       - Merge the two sets by setting `parent[u] = v`.
+       - Update the total weight: `total = total + e[i].w`.
+       - Increment the selected edge count: `count = count + 1`.
+     - Otherwise, discard the edge to avoid forming a cycle.
+8. If `count != n - 1`, display **"Graph is disconnected"**.
+9. Otherwise, display the total weight `total`.
+10. Stop.

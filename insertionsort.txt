@@ -1,0 +1,14 @@
+**Algorithm: Insertion Sort**
+
+1. Start.
+2. Read the number of elements `n`.
+3. Read `n` elements into array `a`.
+4. Repeat steps 5–9 for `i = 1` to `n - 1`:
+   - Set `key = a[i]`.
+   - Set `j = i - 1`.
+   - Repeat while `j >= 0` and `a[j] > key`:
+     - Shift the element one position to the right: `a[j + 1] = a[j]`.
+     - Decrement `j` by 1.
+   - Insert the key into its correct position: `a[j + 1] = key`.
+5. Display the sorted array.
+6. Stop.

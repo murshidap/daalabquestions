@@ -1,0 +1,26 @@
+**Algorithm: Fractional Knapsack**
+
+1. Start.
+2. Read the number of items `n`.
+3. For each item, read its weight `weight[i]` and profit `profit[i]`.
+   - If `weight[i] <= 0` or `profit[i] < 0`, display **"Invalid weight or profit"** and stop.
+   - Calculate the profit-to-weight ratio: `ratio[i] = profit[i] / weight[i]`.
+4. Read the knapsack capacity `capacity`.
+   - If `capacity < 0`, display **"Invalid capacity"** and stop.
+5. **Sort the Items:**
+   - Repeat for `i = 0` to `n - 2`:
+     - Repeat for `j = 0` to `n - i - 2`:
+       - If `ratio[j] < ratio[j + 1]`, swap the corresponding `ratio`, `weight`, and `profit` values.
+   - The items are now arranged in descending order of profit-to-weight ratio.
+6. Initialize `totalProfit = 0`.
+7. **Select Items:**
+   - Repeat for `i = 0` to `n - 1`, while `capacity > 0`:
+     - If `weight[i] <= capacity`:
+       - Add the item's profit: `totalProfit = totalProfit + profit[i]`.
+       - Reduce the capacity: `capacity = capacity - weight[i]`.
+     - Otherwise:
+       - Calculate the fraction to be taken: `fraction = capacity / weight[i]`.
+       - Add the fractional profit: `totalProfit = totalProfit + profit[i] * fraction`.
+       - Set `capacity = 0`.
+8. Display the maximum profit `totalProfit`.
+9. Stop.

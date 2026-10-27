@@ -1,0 +1,30 @@
+**Algorithm: Travelling Salesman Problem Using Branch and Bound**
+
+1. Start.
+2. Read the number of cities `n`.
+3. Read the cost matrix `cost`, where `0` indicates no path between cities.
+4. Initialize:
+   - `minCost = 999999`
+   - `visited[0] = 1`
+   - `path[0] = 0`
+5. Call `tsp(0, 1, 0)`, where `city = 0`, `count = 1`, and `total = 0`.
+6. **Find the Optimal Tour:**
+   - If `count == n`:
+     - If `cost[city][0] != 0`, calculate the complete tour cost: `total = total + cost[city][0]`.
+     - If `total < minCost`:
+       - Update `minCost = total`.
+       - Copy `path` into `bestPath`.
+     - Return.
+   - Otherwise, repeat for `i = 0` to `n - 1`:
+     - If `visited[i] == 0` and `cost[city][i] != 0`:
+       - Check whether `total + cost[city][i] < minCost`.
+       - If true:
+         - Mark the city as visited: `visited[i] = 1`.
+         - Add the city to the path: `path[count] = i`.
+         - Recursively call `tsp(i, count + 1, total + cost[city][i])`.
+         - Backtrack by setting `visited[i] = 0`.
+7. If `minCost == 999999`, display **"No valid tour exists."**
+8. Otherwise:
+   - Display the optimal tour using `bestPath`, followed by the starting city `0`.
+   - Display the minimum cost `minCost`.
+9. Stop.

@@ -1,0 +1,24 @@
+**Algorithm: Prim's Algorithm**
+
+1. Start.
+2. Read the number of vertices `n`.
+3. Read the adjacency matrix `a` of the graph, where `0` indicates no edge.
+4. Initialize `visited[i] = 0` for all vertices.
+5. Mark the starting vertex as visited: `visited[0] = 1`.
+6. Initialize `edges = 0` and `total = 0`.
+7. **Construct the Minimum Spanning Tree (MST):**
+   - Repeat while `edges < n - 1`:
+     1. Set `min = 999999`.
+     2. For each vertex `i = 0` to `n - 1`:
+        - If `visited[i] == 1`:
+          - For each vertex `j = 0` to `n - 1`:
+            - If `visited[j] == 0`, `a[i][j] != 0`, and `a[i][j] < min`:
+              - Update `min = a[i][j]`.
+              - Set `u = i` and `v = j`.
+     3. If `min == 999999`, display **"Graph is disconnected"** and stop.
+     4. Display the selected edge `u - v` and its weight `min`.
+     5. Mark the destination vertex as visited: `visited[v] = 1`.
+     6. Update the total weight: `total = total + min`.
+     7. Increment the edge count: `edges = edges + 1`.
+8. Display the total weight of the MST.
+9. Stop.

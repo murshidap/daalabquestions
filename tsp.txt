@@ -1,0 +1,29 @@
+**Algorithm: Travelling Salesman Problem (TSP) Using Backtracking**
+
+1. Start.
+2. Read the number of cities `n`.
+3. If `n < 2` or `n > 10`, display **"Invalid number of cities"** and stop.
+4. Read the cost matrix `cost`, where `0` indicates no route between two cities.
+5. Initialize:
+   - `minCost = 999999`
+   - `path[0] = 0`
+   - `visited[0] = 1`
+6. Call `tsp(0, 1, 0)`, where `city = 0`, `count = 1`, and `total = 0`.
+7. **Find the Minimum-Cost Tour:**
+   - If `count == n`:
+     - Check whether a return route exists: `cost[city][0] != 0`.
+     - If the return route exists and `total + cost[city][0] < minCost`:
+       - Update `minCost = total + cost[city][0]`.
+       - Copy `path` into `bestPath`.
+     - Return.
+   - Otherwise, repeat for `i = 1` to `n - 1`:
+     - If `visited[i] == 0` and `cost[city][i] != 0`:
+       - Mark the city as visited: `visited[i] = 1`.
+       - Add the city to the path: `path[count] = i`.
+       - Recursively call `tsp(i, count + 1, total + cost[city][i])`.
+       - Backtrack by setting `visited[i] = 0`.
+8. If `minCost == 999999`, display **"No complete tour exists"**.
+9. Otherwise:
+   - Display the minimum cost `minCost`.
+   - Display the tour using `bestPath`, followed by the starting city `0`.
+10. Stop.

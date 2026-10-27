@@ -1,0 +1,20 @@
+**Algorithm: Sum of Subsets Using Backtracking**
+
+1. Start.
+2. Read the number of elements `n`.
+3. Read `n` elements into array `a`.
+4. Read the target sum `target`.
+5. Call `sumOfSubsets(0, 0)`, where `i = 0` is the starting index and `sum = 0` is the initial sum.
+6. **Find Subsets Using Backtracking:**
+   - If `sum == target`:
+     - Display all elements `a[j]` for which `x[j] == 1`, where `j = 0` to `i - 1`.
+     - Return.
+   - If `i == n` or `sum > target`, return without further processing.
+   - **Include the current element:**
+     - Set `x[i] = 1`.
+     - Recursively call `sumOfSubsets(i + 1, sum + a[i])`.
+   - **Exclude the current element:**
+     - Set `x[i] = 0`.
+     - Recursively call `sumOfSubsets(i + 1, sum)`.
+7. Display all subsets whose sum equals `target`.
+8. Stop.

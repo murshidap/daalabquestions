@@ -1,0 +1,37 @@
+**Algorithm: Queue Operations (Enqueue, Dequeue, Display)**
+
+1. Start.
+2. Initialize `front = -1` and `rear = -1`.
+3. Display the menu: **1. ENQUEUE  2. DEQUEUE  3. DISPLAY  4. EXIT**.
+4. Read the user's `choice`.
+5. Perform the selected operation:
+
+   **Case 1: ENQUEUE**
+   - If `rear == 99`, display **"Queue Overflow"**.
+   - Otherwise:
+     - Read the element `value`.
+     - If `front == -1`, set `front = 0`.
+     - Insert the element by setting `q[++rear] = value`.
+   - Return to step 3.
+
+   **Case 2: DEQUEUE**
+   - If `front == -1` or `front > rear`, display **"Queue Underflow"**.
+   - Otherwise:
+     - Display the deleted element `q[front]`.
+     - Increment `front` by 1.
+     - If `front > rear`, reset `front = rear = -1`.
+   - Return to step 3.
+
+   **Case 3: DISPLAY**
+   - If `front == -1`, display **"Queue is empty"**.
+   - Otherwise, display the elements from `q[front]` to `q[rear]`.
+   - Return to step 3.
+
+   **Case 4: EXIT**
+   - Terminate the program.
+
+   **Default:**
+   - Display **"Invalid choice"**.
+   - Return to step 3.
+
+6. Stop.

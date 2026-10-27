@@ -1,0 +1,40 @@
+**Algorithm: Stack Operations (Push, Pop, Display, Peek)**
+
+1. Start.
+2. Initialize `top = -1` and set stack size `n = 100`.
+3. Display the menu: **1. PUSH  2. POP  3. DISPLAY  4. PEEK  5. EXIT**.
+4. Read the user's `choice`.
+5. Perform the selected operation:
+
+   **Case 1: PUSH**
+   - If `top == n - 1`, display **"Stack Overflow"**.
+   - Otherwise:
+     - Read the element `value`.
+     - Increment `top` by 1 and insert the element: `stack[++top] = value`.
+   - Return to step 3.
+
+   **Case 2: POP**
+   - If `top == -1`, display **"Stack Underflow"**.
+   - Otherwise:
+     - Display the deleted element `stack[top]`.
+     - Decrement `top` by 1.
+   - Return to step 3.
+
+   **Case 3: DISPLAY**
+   - If `top == -1`, display **"Stack is empty"**.
+   - Otherwise, display the elements from `stack[top]` to `stack[0]` in reverse index order.
+   - Return to step 3.
+
+   **Case 4: PEEK**
+   - If `top == -1`, display **"Stack is empty"**.
+   - Otherwise, display the top element `stack[top]`.
+   - Return to step 3.
+
+   **Case 5: EXIT**
+   - Terminate the program.
+
+   **Default:**
+   - Display **"Invalid choice"**.
+   - Return to step 3.
+
+6. Stop.

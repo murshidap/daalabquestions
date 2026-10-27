@@ -1,0 +1,24 @@
+**Algorithm: Heap Sort**
+
+1. Start.
+2. Read the number of elements `n`.
+3. Read `n` elements into array `a`.
+4. **Build a Max Heap:**
+   - Set `i = n/2 - 1`.
+   - Repeat while `i >= 0`:
+     - Set `largest = i`, `left = 2*i + 1`, and `right = 2*i + 2`.
+     - If `left < n` and `a[left] > a[largest]`, set `largest = left`.
+     - If `right < n` and `a[right] > a[largest]`, set `largest = right`.
+     - If `largest != i`:
+       - Swap `a[i]` and `a[largest]`.
+       - Repeat the heapify operation for the affected subtree at index `largest`.
+     - Decrement `i` by 1.
+5. **Sort the Array:**
+   - Set `i = n - 1`.
+   - Repeat while `i > 0`:
+     - Swap the root element `a[0]` with `a[i]`.
+     - Reduce the heap size to `i`.
+     - Heapify the reduced heap starting from index `0` to maintain the Max Heap property.
+     - Decrement `i` by 1.
+6. Display the sorted array.
+7. Stop.
