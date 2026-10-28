@@ -1,12 +1,13 @@
-**Algorithm: Find Minimum and Maximum Elements**
-
 1. Start.
-2. Read the number of elements `n`.
+2. Read the number of elements `n`. If `n` is less than 1 or greater than 100, display an error and stop.
 3. Read `n` elements into array `a`.
-4. Initialize `min = a[0]` and `max = a[0]`.
-5. Repeat for `i = 1` to `n - 1`:
-   - If `a[i] < min`, update `min = a[i]`.
-   - If `a[i] > max`, update `max = a[i]`.
-6. Display the minimum element `min`.
-7. Display the maximum element `max`.
-8. Stop.
+4. Call `FindMinMax(a, 0, n - 1)`.
+5. In `FindMinMax(a, low, high)`:
+   - If `low == high`, return `a[low]` as both the minimum and maximum.
+   - If the range contains two elements, compare them once and return the smaller as the minimum and the larger as the maximum.
+   - Otherwise, calculate `mid = low + (high - low) / 2`.
+   - Recursively find the minimum and maximum in the left half, `low` through `mid`.
+   - Recursively find the minimum and maximum in the right half, `mid + 1` through `high`.
+   - Return the smaller of the two minima and the larger of the two maxima.
+6. Display the returned minimum and maximum.
+7. Stop.

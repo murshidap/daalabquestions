@@ -2,7 +2,7 @@
 
 int main()
 {
-    int n, i, j, max = 0, total = 0, temp;
+    int n, i, j, total = 0, temp;
     int deadline[20], profit[20], job[20];
     int slot[20], maxDeadline = 0;
 
